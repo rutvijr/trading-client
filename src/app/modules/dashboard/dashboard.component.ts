@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { of } from 'rxjs';
+import { StockService } from '../../core/services/stock.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -8,9 +8,12 @@ import { of } from 'rxjs';
 })
 export class DashboardComponent implements OnInit {
 
-  topX$ = of(10);
+  readonly displayedColumns: string[] = ['position', 'name', 'buyPrice', 'recommendedBuy', 'order'];
 
-  constructor() { }
+  stocks$ = this.stockService.stocks$;
+  topX$ = this.stockService.topX$;
+
+  constructor(private stockService: StockService) { }
 
   ngOnInit(): void {
   }
