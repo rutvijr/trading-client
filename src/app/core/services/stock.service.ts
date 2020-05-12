@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { of } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
+import { Stock } from 'src/app/shared/models/stock.model';
 
 @Injectable({
   providedIn: 'root'
@@ -13,5 +15,12 @@ export class StockService {
   ]);
   topX$ = this.stocks$.pipe(map(stocks => stocks.length));
 
+  private readonly STOCKS_URL = 'ws://localhost:80';
+  private stocksWebSocket: WebSocketSubject<Stock[]> = webSocket(this.STOCKS_URL);
+
   constructor() { }
+
+  streamTopStocks() {
+    // this.stocks$ = this.stocksWebSocket.asObservable();
+  }
 }
