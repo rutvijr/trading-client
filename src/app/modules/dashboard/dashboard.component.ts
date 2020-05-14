@@ -1,4 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
+import { Observable } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
+import { Stock } from 'src/app/shared/models/stock.model';
 import { StockService } from '../../core/services/stock.service';
 
 @Component({
@@ -12,10 +17,17 @@ export class DashboardComponent implements OnInit {
 
   stocks$ = this.stockService.stocks$;
   topX$ = this.stockService.topX$;
+  tableDataSource$: Observable<MatTableDataSource<Stock>>;
+  tableDataSource: MatTableDataSource<Stock>;
 
-  constructor(private stockService: StockService) { }
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  ngOnInit(): void {
+  constructor(private stockService: StockService) {
+    this.tableDataSource$ = this.stocks$.pipe(map(stocks => new MatTableDataSource(stocks)));
   }
 
+  ngOnInit(): void {
+    this.tableDataSource$.pipe(tap(tableDataSource => tableDataSource.sort = this.sort))
+      .subscribe(tableDataSource => this.tableDataSource = tableDataSource);
+  }
 }

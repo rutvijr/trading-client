@@ -4,7 +4,8 @@
   </mat-card-header>
   <mat-card-content class="stocks-wrapper">
     <table mat-table
-           [dataSource]="stocks$ | async"
+           matSort
+           [dataSource]="tableDataSource"
            class="mat-elevation-z8">
 
       <!--- Note that these columns can be defined in any order.
@@ -13,6 +14,7 @@
       <!-- Position Column -->
       <ng-container matColumnDef="position">
         <th mat-header-cell
+            mat-sort-header
             *matHeaderCellDef> No. </th>
         <td mat-cell
             *matCellDef="let element"> {{element.position}} </td>
@@ -21,6 +23,7 @@
       <!-- Name Column -->
       <ng-container matColumnDef="name">
         <th mat-header-cell
+            mat-sort-header
             *matHeaderCellDef> Name </th>
         <td mat-cell
             *matCellDef="let element"> {{element.name}} </td>
@@ -29,6 +32,7 @@
       <!-- Buy Price Column -->
       <ng-container matColumnDef="buyPrice">
         <th mat-header-cell
+            mat-sort-header
             *matHeaderCellDef> Buy Price </th>
         <td mat-cell
             *matCellDef="let element"> {{element.buyPrice}} </td>
@@ -37,6 +41,7 @@
       <!-- Recommended buy Column -->
       <ng-container matColumnDef="recommendedBuy">
         <th mat-header-cell
+            mat-sort-header
             *matHeaderCellDef> Recommended Buy </th>
         <td mat-cell
             *matCellDef="let element"> {{element.recommendedBuy}} </td>
