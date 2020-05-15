@@ -13,10 +13,10 @@ export class StockService {
     { position: 1, name: 'AAPL', buyPrice: 100.5, recommendedBuy: 1 },
     { position: 2, name: 'GOOG', buyPrice: 95.82, recommendedBuy: 2 }
   ]);
-  topX$ = this.stocks$.pipe(map(stocks => stocks.length));
+  readonly topX$ = this.stocks$.pipe(map(stocks => stocks.length));
 
   private readonly STOCKS_URL = 'ws://localhost:80';
-  private stocksWebSocket: WebSocketSubject<Stock[]> = webSocket(this.STOCKS_URL);
+  private readonly stocksWebSocket$: WebSocketSubject<Stock[]> = webSocket(this.STOCKS_URL);
 
   constructor() { }
 
