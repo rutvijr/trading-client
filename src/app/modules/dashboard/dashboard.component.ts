@@ -37,8 +37,13 @@ export class DashboardComponent implements OnInit {
     this.stocks$
       .pipe(
         map((stocks) => new MatTableDataSource(stocks)),
-        tap((tableDataSource) => tableDataSource.sort = this.sort)
+        tap((tableDataSource) => this.setTableDataSource(tableDataSource))
       )
-      .subscribe(tableDataSource => this.tableDataSource = tableDataSource);
+      .subscribe();
+  }
+
+  private setTableDataSource(tableDataSource: MatTableDataSource<Stock>) {
+    tableDataSource.sort = this.sort;
+    this.tableDataSource = tableDataSource;
   }
 }
